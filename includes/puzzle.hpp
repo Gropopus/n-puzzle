@@ -19,13 +19,17 @@ class Puzzle
     public:
         Puzzle(void);
         ~Puzzle(void);
-        int get_file(std::string file);
-        int generate_map(std::string nb);
+        int getFile(std::string file);
+        int generateMap(std::string nb);
+        int stringToGrid(void);
 
 
     private:
         std::string     _content;
         int             _size;
+        int             _max;
+        int             _min;
+        int             **grid;
 
         Puzzle(Puzzle const &copy);
         Puzzle  &operator=(Puzzle const &rhs);  

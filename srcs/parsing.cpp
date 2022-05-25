@@ -4,9 +4,9 @@
 int     parsing(Puzzle *puzzle, char *file, char op)
 {
     if (op == 'f')
-        puzzle->get_file(file);
+        puzzle->getFile(file);
     else
-        puzzle->generate_map(file);
+        puzzle->generateMap(file);
    /* is_map_valid();*/
     return (0);
 }

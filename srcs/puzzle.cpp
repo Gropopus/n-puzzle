@@ -1,6 +1,61 @@
 # include "../includes/puzzle.hpp"
 
-int     Puzzle::get_file(std::string file)
+void	ft_gnl(std::string &buffer, std::string &line, char to)
+{
+	size_t	i;
+
+	i = buffer.find(to);
+	if (i != std::string::npos)
+	{
+		line = std::string (buffer, 0, i++);
+		buffer = buffer.substr(i);
+	}
+	else
+	{
+		if (buffer[buffer.size() - 1] == to)
+			buffer = buffer.substr(buffer.size());
+		else
+		{
+			line = buffer;
+			buffer = buffer.substr(buffer.size());
+		}
+	}
+}
+
+bool    str_is_digit(std::string &str)
+{
+    int     i = 0;
+    bool    digit = false;
+    
+    while (str[i])
+    {
+        if (str[i] >= '0' && str[i] <= '9')
+            digit = true;
+        i++;
+    }
+    return (digit);
+}
+
+int     Puzzle::stringToGrid(void)
+{
+    std::string line;
+    int     hash = 0;
+
+    while (!this->_content.empty())
+    {
+        ft_gnl(this->_content, line, '\n');
+        if ((hash = line.find("#")) == std::string::npos && str_is_digit(line) == false)
+            return (ft_error("Invalid char in map.txt"));
+        if (hash)  
+            line = line.substr(0, hash);
+        
+        std::cout << line << std::endl;
+        line.clear();
+    }
+    return (0);
+}
+
+int     Puzzle::getFile(std::string file)
 {
 	std::stringstream	buffer;
 	std::ifstream       infile(file);
@@ -18,10 +73,12 @@ int     Puzzle::get_file(std::string file)
 	buffer.clear();
 	if(this->_content.empty())
 		return (ft_error("file is empty"));
+    if (this->stringToGrid())
+        return (ft_error("invalid map"));
 	return (0);
 }
 
-int     Puzzle::generate_map(std::string nb)
+int     Puzzle::generateMap(std::string nb)
 {
     try
     {
@@ -36,6 +93,12 @@ int     Puzzle::generate_map(std::string nb)
     return (0);
 }
 
-Puzzle::Puzzle(void) { return; }
+Puzzle::Puzzle(void)
+{ 
+    this->_max = 0;
+    this->_min = 0;
+    this->_size = 0;
+    return;
+}
 
 Puzzle::~Puzzle(void) { return; }
