@@ -22,6 +22,7 @@ class Puzzle
         int getFile(std::string file);
         int generateMap(std::string nb);
         int stringToGrid(void);
+        int get_num(std::string line);
 
 
     private:

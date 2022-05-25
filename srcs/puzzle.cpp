@@ -36,6 +36,37 @@ bool    str_is_digit(std::string &str)
     return (digit);
 }
 
+int   Puzzle::get_num(std::string line)
+{
+    int nb = 0;
+    try 
+    {
+        nb = std::stoi(line);
+    }
+    catch (const std::exception& e)
+    {
+        return (ft_error("Invalid number"));
+    }
+    if (line.length() <= 2)
+    {
+        if (nb < 2 || nb > 18)
+            return (ft_error("Invalid grid size"));
+        std::cout << nb << std::endl;
+        this->_size = nb;
+        if ((this->grid = (int**)malloc(sizeof(int *) * nb)) == NULL)
+            return (ft_error("enable to malloc memory"));
+        for (int i = 0; i < (nb + 1); i++)
+        {
+            if ((this->grid[i] = (int*)malloc(sizeof(int) * nb)) == NULL)
+                return (ft_error("enable to malloc memory"));
+        }
+        return (0);
+    }
+    if (this->_size == 0)
+        return (ft_error("Map size missing"));
+    return (0);
+}
+
 int     Puzzle::stringToGrid(void)
 {
     std::string line;
@@ -48,9 +79,10 @@ int     Puzzle::stringToGrid(void)
             return (ft_error("Invalid char in map.txt"));
         if (hash)  
             line = line.substr(0, hash);
-        
-        std::cout << line << std::endl;
-        line.clear();
+        if (line.find("#") == std::string::npos)
+            get_num(line);
+        //std::cout << line << std::endl;
+        //line.clear();
     }
     return (0);
 }

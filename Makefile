@@ -36,7 +36,7 @@ OBJS		= ${SRCS:.cpp=.o}
 
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror #-g -fsanitize=address
 
 .c.o:
 		@${CC} ${CFLAGS} -I${HEAD} -c $< -o ${<:.cpp=.o}
